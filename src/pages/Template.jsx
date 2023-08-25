@@ -2,17 +2,25 @@ import React, { useState } from 'react';
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
-  UploadOutlined,
+  BarChartOutlined,
+  HomeOutlined,
   UserOutlined,
-  VideoCameraOutlined,
 } from '@ant-design/icons';
-import { Layout, Menu, Button, ConfigProvider, Typography } from 'antd';
+import { Layout, Menu, Button, Typography } from 'antd';
 const { Header, Sider, Content } = Layout;
 
 import { MyContext } from '../contexts/MyContext';
 import { useContext } from 'react';
 
-const { Title } = Typography;
+import { Link, Routes, Route } from 'react-router-dom';
+
+
+
+import Imoveis from './Imoveis/';
+import Dashboard from './Dashboard/';
+import Locatarios from './Locatarios/';
+
+
 
 const Template = (props) => {
   const { logoutUser } = useContext(MyContext);
@@ -28,24 +36,17 @@ const Template = (props) => {
           theme="dark"
           mode="inline"
           defaultSelectedKeys={['1']}
-          items={[
-            {
-              key: '1',
-              icon: <UserOutlined />,
-              label: 'nav 1',
-            },
-            {
-              key: '2',
-              icon: <VideoCameraOutlined />,
-              label: 'nav 2',
-            },
-            {
-              key: '3',
-              icon: <UploadOutlined />,
-              label: 'nav 3',
-            },
-          ]}
-        />
+        >
+          <Menu.Item key="1" icon={<BarChartOutlined />}>
+            <Link to={`${import.meta.env.VITE_REACT_APP_PATH}painel/dashboard`}>Dashboard</Link>
+          </Menu.Item>
+          <Menu.Item key="2" icon={<HomeOutlined />}>
+            <Link to={`${import.meta.env.VITE_REACT_APP_PATH}painel/imoveis`}>Imóveis</Link>
+          </Menu.Item>
+          <Menu.Item key="3" icon={<UserOutlined />}>
+            <Link to={`${import.meta.env.VITE_REACT_APP_PATH}painel/locatarios`}>Locatários</Link>
+          </Menu.Item>
+        </Menu>
       </Sider>
       <Layout>
         <Header
@@ -78,9 +79,13 @@ const Template = (props) => {
             padding: 24,
             height: 'calc(100vh - 112px)',
 
-          }}
-        >
-          <h1>Template</h1>
+          }}>
+          <Routes>
+            <Route path={`${import.meta.env.VITE_REACT_APP_PATH}imoveis`} element={<Imoveis theme={theme} />} />
+            <Route path={`${import.meta.env.VITE_REACT_APP_PATH}dashboard`} element={<Dashboard />} />
+            <Route path={`${import.meta.env.VITE_REACT_APP_PATH}locatarios`} element={<Locatarios />} />
+            {/* Add other routes here */}
+          </Routes>
         </Content>
       </Layout>
     </Layout>
@@ -89,3 +94,4 @@ const Template = (props) => {
 }
 
 export default Template;
+

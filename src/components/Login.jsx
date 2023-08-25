@@ -62,33 +62,38 @@ function Login() {
 
   return (
     <Card
-    title="Login"
-    bordered={false}
-    style={{
-      width: 350,
-    }}
-  >
-    <Form onFinish={submitForm} layout="vertical">
-      <Form.Item label="E-mail">
-        <Input
-          name="email"
-          type="user"
-          value={state.userInfo.email}
-          onChange={onChangeValue}
-        />
-      </Form.Item>
-      <Form.Item label="Senha">
-        <Input.Password name="password" value={state.userInfo.password} onChange={onChangeValue} />
-      </Form.Item>
-      {errorMsg}
-      {successMsg}
-      <Button type="primary" htmlType="submit">
-        Entrar
-      </Button>
-    </Form>
-    <Button onClick={toggleNav} variant="outlined">
+      title="Login"
+      bordered={true}
+      style={{
+        width: 350,
+      }}
+    >
+      <Form onFinish={submitForm} layout="vertical">
+        <Form.Item label="E-mail">
+          <Input
+            name="email"
+            type="user"
+            value={state.userInfo.email}
+            onChange={onChangeValue}
+          />
+        </Form.Item>
+        <Form.Item label="Senha">
+          <Input.Password name="password" value={state.userInfo.password} onChange={onChangeValue} />
+        </Form.Item>
+        {errorMsg}
+        {successMsg}
+        <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+          <Button type="primary" htmlType="submit" style={{ width: '50%' }}>
+            Entrar
+          </Button>
+        </div>
+
+      </Form>
+      <div style={{ width: '100%', display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
+        <Button onClick={toggleNav} variant="outlined" style={{ width: '50%' }}>
           Cadastrar
         </Button>
+      </div>
     </Card>
   );
 }
