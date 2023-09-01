@@ -14,6 +14,7 @@ const Imoveis = (props) => {
     const [messageApi, contextHolder] = message.useMessage();
     const [isModalEditOpen, setIsModalEditOpen] = useState(false);
     const [editImovel, setEditImovel] = useState({});
+    const [localEditImovel, setLocalEditImovel] = useState(null);
 
 
     const showModalCad = () => {
@@ -113,7 +114,7 @@ const Imoveis = (props) => {
             render: (text, record) => {
                 return (
                     <>
-                        <Button type='text' onClick={() => handleOpenModal(record)} icon={<EditOutlined />} style={{ color: theme.token.colorPrimary }} />
+                        <Button type='text' onClick={() => handleEdit(record)} icon={<EditOutlined />} style={{ color: theme.token.colorPrimary }} />
                         <Button type='text' icon={<DeleteOutlined />} style={{ color: theme.token.colorError }} />
                     </>
                 );
@@ -164,6 +165,21 @@ const Imoveis = (props) => {
             });
     }
 
+    useEffect(() => {
+        if (isModalEditOpen && formRefEdit.current) {
+            formRefEdit.current.setFieldsValue(editImovel);
+        }
+    }, [isModalEditOpen]);
+
+    const handleLocalFieldChange = (e, fieldName) => {
+        setLocalEditImovel({ ...localEditImovel, [fieldName]: e.target.value });
+    };
+
+    const handleEdit = (locatario) => {
+        setEditImovel(locatario); // atualiza o locatário a ser editado
+        setIsModalEditOpen(true);  // abre o modal
+    };
+
 
     return (
         <>
@@ -189,9 +205,6 @@ const Imoveis = (props) => {
                         width: '100%',
                         padding: '20px'
                     }}
-                    // initialValues={{
-                    //     remember: true,
-                    // }}
                     onFinish={onFinish}
                     onFinishFailed={onFinishFailed}
                     autoComplete="off"
@@ -410,24 +423,33 @@ const Imoveis = (props) => {
             >
                 <Form
                     ref={formRefEdit}
-                    name="basic"
-                    labelCol={{
-                        span: 20,
-                    }}
-                    style={{
-                        width: '100%',
-                        padding: '20px'
-                    }}
-                    onFinish={onFinishEdit}
+                    name="edit"
                     initialValues={editImovel}
+                    onValuesChange={(changedValues, allValues) => {
+                        setEditImovel(allValues);
+                    }}
+                    autoComplete="off"
+                    layout='vertical'
                 >
                     <Form.Item
-                        label="CEP"
-                        name="cep"
-                        style={{ flex: 1 }}
+                        label="ID"
+                        name="id"
                     >
-                        <Input onKeyUp={handleCepChange} />
-                    </Form.Item>                    
+                        <Input
+                            value={localEditImovel ? localEditImovel.id : ''}
+                            disabled={true}
+                        />
+                    </Form.Item>
+                    <Form.Item
+                        label="Endereço"
+                        name="endereco"
+                        rules={[{ required: true, message: 'Por favor, insira o endereço do imóvel!' }]}
+                    >
+                        <Input
+                            value={localEditImovel ? localEditImovel.endereco : ''}
+                            onChange={(e) => handleLocalFieldChange(e, 'endereco')}
+                        />
+                    </Form.Item>
                 </Form>
             </Modal>
         </>

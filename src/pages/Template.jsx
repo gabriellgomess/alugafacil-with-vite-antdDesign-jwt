@@ -5,6 +5,7 @@ import {
   BarChartOutlined,
   HomeOutlined,
   UserOutlined,
+  CheckOutlined
 } from '@ant-design/icons';
 import { Layout, Menu, Button, Typography } from 'antd';
 const { Header, Sider, Content } = Layout;
@@ -19,6 +20,7 @@ import { Link, Routes, Route } from 'react-router-dom';
 import Imoveis from './Imoveis/';
 import Dashboard from './Dashboard/';
 import Locatarios from './Locatarios/';
+import Alugueis from './Alugueis';
 
 
 
@@ -45,6 +47,9 @@ const Template = (props) => {
           </Menu.Item>
           <Menu.Item key="3" icon={<UserOutlined />}>
             <Link to={`${import.meta.env.VITE_REACT_APP_PATH}painel/locatarios`}>Locatários</Link>
+          </Menu.Item>
+          <Menu.Item key="4" icon={<CheckOutlined />}>
+            <Link to={`${import.meta.env.VITE_REACT_APP_PATH}painel/alugueis`}>Alugueis</Link>
           </Menu.Item>
         </Menu>
       </Sider>
@@ -83,8 +88,8 @@ const Template = (props) => {
           <Routes>
             <Route path={`${import.meta.env.VITE_REACT_APP_PATH}imoveis`} element={<Imoveis theme={theme} />} />
             <Route path={`${import.meta.env.VITE_REACT_APP_PATH}dashboard`} element={<Dashboard />} />
-            <Route path={`${import.meta.env.VITE_REACT_APP_PATH}locatarios`} element={<Locatarios />} />
-            {/* Add other routes here */}
+            <Route path={`${import.meta.env.VITE_REACT_APP_PATH}locatarios`} element={<Locatarios theme={theme} />} />
+            <Route path={`${import.meta.env.VITE_REACT_APP_PATH}alugueis`} element={<Alugueis theme={theme} />} />
           </Routes>
         </Content>
       </Layout>
